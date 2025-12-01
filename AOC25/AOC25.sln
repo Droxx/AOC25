@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOC25", "AOC25.csproj", "{FCCDBC3C-40C3-4129-8B69-FE7A13FFD843}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCCDBC3C-40C3-4129-8B69-FE7A13FFD843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCDBC3C-40C3-4129-8B69-FE7A13FFD843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCCDBC3C-40C3-4129-8B69-FE7A13FFD843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCCDBC3C-40C3-4129-8B69-FE7A13FFD843}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
