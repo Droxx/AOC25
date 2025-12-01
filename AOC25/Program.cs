@@ -1,3 +1,6 @@
+using AOC25.Contracts;
+using AOC25.Days;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,9 +18,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/run", (string input) =>
+app.MapPost("/run", (RunInput input) =>
     {
-        return input;
+        IDay day = input.Day switch
+        {
+            Day.Day1 => new Day1(),
+            _ => throw new NotImplementedException($"Day {input.Day} is not implemented.")
+        };
+        return input.Part switch
+        {
+            Part.Part1 => day.SolvePart1(input.Input),
+            Part.Part2 => day.SolvePart2(input.Input),
+            _ => throw new NotImplementedException($"Part {input.Part} is not implemented.")
+        };
     })
     .WithName("RunDay");
 
