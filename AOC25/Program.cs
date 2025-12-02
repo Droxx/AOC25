@@ -23,6 +23,7 @@ app.MapPost("/run", (RunInput input) =>
         IDay day = input.Day switch
         {
             Day.Day1 => new Day1(),
+            Day.Day2 => new Day2(),
             _ => throw new NotImplementedException($"Day {input.Day} is not implemented.")
         };
         return input.Part switch
