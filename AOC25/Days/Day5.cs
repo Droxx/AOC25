@@ -19,48 +19,51 @@ public class Day5 : IDay
     public string SolvePart2(string input)
     {
         var parsedInput = ParseInput(input);
-        var finalRanges = new List<IngredientRange>();
-        var max = parsedInput.FreshRanges.Max(r => r.End);
-        var min = parsedInput.FreshRanges.Min(r => r.Start);
-
-        bool rangesHit = false;
         
+        var sortedByStart = parsedInput.FreshRanges.OrderBy(r => r.Start).ToList();
+
+        var mergedRanges = new List<IngredientRange>();
         do
-        {
-            var nextEarliestStart = parsedInput.FreshRanges.Where(f => f.Start > (finalRanges.Any() ? finalRanges.Max(r => r.Start) : 0)).Min(r => r.Start);
-            var newRange = parsedInput.FreshRanges.First(f => f.Start == nextEarliestStart);
+        {        
+            var currentStart = sortedByStart[0].Start;
+            var currentMax = sortedByStart[0].End;
 
-            if (newRange.End < (finalRanges.Any() ? finalRanges.Max(r => r.End) : 0))
+            for(var i = 0; i < sortedByStart.Count; i++)
             {
-                parsedInput.FreshRanges.Remove(newRange);
-            }
-
-            if (finalRanges.Any() && newRange.Start < finalRanges.Max(r => r.End))
-            {
-                var finalRangeToExtend = finalRanges.First(f => f.End >= newRange.Start);
-                finalRangeToExtend.End = newRange.End;
-                parsedInput.FreshRanges.Remove(newRange);
-            }
-            else
-            {
-                finalRanges.Add(new IngredientRange()
+                if (currentMax < sortedByStart[i].End)
                 {
-                    Start = newRange.Start,
-                    End = newRange.End
-                });
+                    currentMax = sortedByStart[i].End;
+                }
+                if (i == sortedByStart.Count - 1)
+                {
+                    mergedRanges.Add(new IngredientRange
+                    {
+                        Start = currentStart,
+                        End = currentMax
+                    });
+                    break;
+                }
+                
+                var next = sortedByStart[i+1];
+                if (next.Start > currentMax)
+                {
+                    // we hit a gap
+                    mergedRanges.Add(new IngredientRange
+                    {
+                        Start = currentStart,
+                        End = currentMax
+                    });
+                    
+                    sortedByStart = sortedByStart.Where(s => s.Start > currentMax).ToList();
+                    
+                    break;
+                }
             }
-            
-            if(finalRanges.Min(f => f.Start) == min &&
-               finalRanges.Max(f => f.End) == max)
-            {
-                rangesHit = true;
-            }
-            
-        } while (!rangesHit);
-
+        } while(mergedRanges.Max(r => r.End) < parsedInput.FreshRanges.Max(r => r.End));
+        
         long total = 0;
         
-        foreach (var range in finalRanges)
+        foreach (var range in mergedRanges)
         {
             total += (range.End - range.Start + 1);
         }
