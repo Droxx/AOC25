@@ -27,6 +27,7 @@ app.MapPost("/run", (RunInput input) =>
             Day.Day3 => new Day3(),
             Day.Day4 => new Day4(),
             Day.Day5 => new Day5(),
+            Day.Day6 => new Day6(),
             _ => throw new NotImplementedException($"Day {input.Day} is not implemented.")
         };
         return input.Part switch
